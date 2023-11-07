@@ -1,43 +1,35 @@
 #include "heap.h"
 
 // Constructor: Builds a heap from a given array a[] of given size
-MinHeap::MinHeap(int vertexes[], int size)
+MinHeap::MinHeap(Node nodes[], int size)
 {
     heap_size = 0;
     capacity = size;
-    harr = new Vertex[size]
     for(int i = 0; i < size; i++){
-      harr[i] = new Vertex(vertexes[i]) 
+      insert(nodes[i]);
     }
 }
- 
-// Inserts a new key 'k'
-void MinHeap::insertKey(int k)
-{
-    if (heap_size == capacity)
-    {
-        cout << "\nOverflow: Could not insertKey\n";
-        return;
-    }
- 
-    // First insert the new key at the end
-    heap_size++;
-    int i = heap_size - 1;
-    Vertex vert = new Vertex(k);
-    harr[i] = vert;
- 
-    // Fix the min heap property if it is violated
-    while (i != 0 && harr[parent(i)].distance > harr[i].distance)
-    {
-       swap(&harr[i], &harr[parent(i)]);
-       i = parent(i);
-    }
+
+void MinHeap::insert(Node n){
+  if(heap_size == capacity){
+    return;
+  }
+  harr[heap_size] = n;
+  int i = heap_size;
+  while(i != 0 && harr[parent(i)].distance > harr[i].distance){
+    swap(&harr[i], &harr[parent(i)]);
+    i = parent(i);
+  }
+  heap_size++;
 }
+ 
  
 // Decreases value of key at index 'i' to new_val.  It is assumed that
 // new_val is smaller than harr[i].
-void MinHeap::decreaseKey(int i, int new_val)
+void MinHeap::decreaseKey(int name, int new_val)
 {
+    int i = 0;
+    while(harr[i].name != name){i++;}
     harr[i].distance = new_val;
     while (i != 0 && harr[parent(i)].distance > harr[i].distance)
     {
@@ -47,7 +39,7 @@ void MinHeap::decreaseKey(int i, int new_val)
 }
  
 // Method to remove minimum element (or root) from min heap
-Vertex MinHeap::extractMin()
+Node MinHeap::pop()
 {
     if (heap_size <= 0)
         throw("heap empty");
@@ -58,7 +50,7 @@ Vertex MinHeap::extractMin()
     }
  
     // Store the minimum value, and remove it from heap
-    Vertex root = harr[0];
+    Node root = harr[0];
     harr[0] = harr[heap_size-1];
     heap_size--;
     MinHeapify(0);
@@ -72,7 +64,7 @@ Vertex MinHeap::extractMin()
 void MinHeap::deleteKey(int i)
 {
     decreaseKey(i, INT_MIN);
-    extractMin();
+    pop();
 }
  
 // A recursive method to heapify a subtree with the root at given index
@@ -94,9 +86,9 @@ void MinHeap::MinHeapify(int i)
 }
  
 // A utility function to swap two elements
-void swap(Vertex *x, Vertex *y)
+void MinHeap::swap(Node *x, Node *y)
 {
-    Vertex temp = *x;
+    Node temp = *x;
     *x = *y;
     *y = temp;
 }

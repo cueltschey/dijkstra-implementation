@@ -1,34 +1,21 @@
 // A C++ program to demonstrate common Binary Heap Operations
-#include<iostream>
-#include<climits>
-#include<limits>
-
+#include "Node.h"
 
 using namespace std; 
 
-//class for storing graph related data
-class Vertex{
-public:    
-  int name;
-  int distance;
-  Vertex* parent;
-  Vertex(int n){
-    name = n;
-    distance = INT_MAX;
-    parent = nullptr;
-  }
-};
  
 // A class for Min Heap
 class MinHeap
 {
 private:
-    Vertex* harr; // pointer to array of elements in heap
+    Node* harr; // pointer to array of elements in heap
     int capacity; // maximum possible size of min heap
     int heap_size; // Current number of elements in min heap
 public:
     // Constructor
-    MinHeap(int* vertexes, int size);
+    MinHeap(Node* nodes, int size);
+
+    void insert(Node n);
  
     // to heapify a subtree with the root at given index
     void MinHeapify(int );
@@ -42,10 +29,10 @@ public:
     int right(int i) { return (2*i + 2); }
  
     // to extract the root which is the minimum element
-    Vertex extractMin();
+    Node pop();
  
     // Decreases key value of key at index i to new_val
-    void decreaseKey(int i, int new_val);
+    void decreaseKey(int name, int new_val);
  
     // Returns the minimum key (key at root) from min heap
     int getMin() { return harr[0].distance; }
@@ -53,8 +40,6 @@ public:
     // Deletes a key stored at index i
     void deleteKey(int i);
  
-    // Inserts a new key 'k'
-    void insertKey(int k);
-
-    void swap(Vertex *x, Vertex *y);
+    // utility for swapping nodes
+    void swap(Node *x, Node *y);
 };

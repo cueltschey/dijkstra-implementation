@@ -9,6 +9,7 @@ void swap(int *x, int *y);
 // A class for Min Heap
 class MinHeap
 {
+private:
     int *harr; // pointer to array of elements in heap
     int capacity; // maximum possible size of min heap
     int heap_size; // Current number of elements in min heap
@@ -40,5 +41,5 @@ public:
     void deleteKey(int i);
  
     // Inserts a new key 'k'
-    void insertKey(int k);
+    void insertKey(int k, int distance);
 };

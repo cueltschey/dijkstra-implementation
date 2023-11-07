@@ -23,7 +23,7 @@ void MinHeap::insertKey(int k, int dist)
     harr[i] = [k,dist];
  
     // Fix the min heap property if it is violated
-    while (i != 0 && harr[parent(i)] > harr[i])
+    while (i != 0 && harr[parent(i)][1] > harr[i][1])
     {
        swap(&harr[i], &harr[parent(i)]);
        i = parent(i);

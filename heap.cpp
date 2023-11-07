@@ -1,15 +1,18 @@
 #include "heap.h"
 
 // Constructor: Builds a heap from a given array a[] of given size
-MinHeap::MinHeap(int cap)
+MinHeap::MinHeap(int vertexes[], int size)
 {
     heap_size = 0;
-    capacity = cap;
-    harr = new int[][cap];
+    capacity = size;
+    harr = new Vertex[size]
+    for(int i = 0; i < size; i++){
+      harr[i] = new Vertex(vertexes[i]) 
+    }
 }
  
 // Inserts a new key 'k'
-void MinHeap::insertKey(int k, int dist)
+void MinHeap::insertKey(int k)
 {
     if (heap_size == capacity)
     {
@@ -20,10 +23,11 @@ void MinHeap::insertKey(int k, int dist)
     // First insert the new key at the end
     heap_size++;
     int i = heap_size - 1;
-    harr[i] = [k,dist];
+    Vertex vert = new Vertex(k);
+    harr[i] = vert;
  
     // Fix the min heap property if it is violated
-    while (i != 0 && harr[parent(i)][1] > harr[i][1])
+    while (i != 0 && harr[parent(i)].distance > harr[i].distance)
     {
        swap(&harr[i], &harr[parent(i)]);
        i = parent(i);
@@ -34,8 +38,8 @@ void MinHeap::insertKey(int k, int dist)
 // new_val is smaller than harr[i].
 void MinHeap::decreaseKey(int i, int new_val)
 {
-    harr[i] = new_val;
-    while (i != 0 && harr[parent(i)] > harr[i])
+    harr[i].distance = new_val;
+    while (i != 0 && harr[parent(i)].distance > harr[i].distance)
     {
        swap(&harr[i], &harr[parent(i)]);
        i = parent(i);
@@ -43,10 +47,10 @@ void MinHeap::decreaseKey(int i, int new_val)
 }
  
 // Method to remove minimum element (or root) from min heap
-int MinHeap::extractMin()
+Vertex MinHeap::extractMin()
 {
     if (heap_size <= 0)
-        return INT_MAX;
+        throw("heap empty");
     if (heap_size == 1)
     {
         heap_size--;
@@ -54,7 +58,7 @@ int MinHeap::extractMin()
     }
  
     // Store the minimum value, and remove it from heap
-    int root = harr[0];
+    Vertex root = harr[0];
     harr[0] = harr[heap_size-1];
     heap_size--;
     MinHeapify(0);
@@ -78,9 +82,9 @@ void MinHeap::MinHeapify(int i)
     int l = left(i);
     int r = right(i);
     int smallest = i;
-    if (l < heap_size && harr[l] < harr[i])
+    if (l < heap_size && harr[l].distance < harr[i].distance)
         smallest = l;
-    if (r < heap_size && harr[r] < harr[smallest])
+    if (r < heap_size && harr[r].distance < harr[smallest].distance)
         smallest = r;
     if (smallest != i)
     {
@@ -90,9 +94,9 @@ void MinHeap::MinHeapify(int i)
 }
  
 // A utility function to swap two elements
-void swap(int *x, int *y)
+void swap(Vertex *x, Vertex *y)
 {
-    int temp = *x;
+    Vertex temp = *x;
     *x = *y;
     *y = temp;
 }

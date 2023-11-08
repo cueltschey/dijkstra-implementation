@@ -13,7 +13,7 @@ private:
     int heap_size; // Current number of elements in min heap
 public:
     // Constructor
-    MinHeap(Node* nodes, int size);
+    MinHeap(Node* nodes[11], int size);
 
     void insert(Node n);
  
@@ -29,7 +29,7 @@ public:
     int right(int i) { return (2*i + 2); }
  
     // to extract the root which is the minimum element
-    Node pop();
+    Node* pop();
  
     // Decreases key value of key at index i to new_val
     void decreaseKey(int name, int new_val);

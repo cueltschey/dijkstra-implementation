@@ -1,9 +1,24 @@
 #include "heap.h"
 #include <iostream>
+#include <cstdlib>
 
 
 
 using namespace std;
+
+
+void algorithm(Node* n, MinHeap &p){
+    cout << n->name << endl;
+    for(int i = 0; i < 3; ++i){
+      int current = n->distance + n->weights[i];
+      int cur_dist = n->edges[i]->distance;
+      if(current < cur_dist){
+        n->edges[i]->distance = current;
+        p.decreaseKey(n->name, current);
+      }
+    }
+    algorithm(p.pop(), p);
+  }
 
 int main(){
   
@@ -24,58 +39,23 @@ int main(){
 };
 */
   //initialize nodes
-  Node* nodes;
+  Node* nodes[11];
   for(int name = 0; name < 11; ++name){
-    nodes[name] = new Node(name);
+    Node* n = new Node(name);
+    nodes[name] = n;
   }
 
 
   // connect nodes
-  nodes[0].num_edges = 3;
-  nodes[0].edges = {1,3,9};
-  nodes[0].weights = {4,1,3};
 
-  nodes[1].num_edges;
-  nodes[1].edges;
-  nodes[1].weights;
+  for(int i = 0; i < 11; ++i){
+    for(int j = 0; j < 3; ++j){
+      nodes[i]->edges[j] = nodes[i + (rand() % 4)];
+      int we[3] = {rand() % 5, rand() % 5, rand() % 5};
+      nodes[i]->weights = we; 
+    }
+  }
 
-  nodes[2].num_edges;
-  nodes[2].edges;
-  nodes[2].weights;
-
-  nodes[3].num_edges;
-  nodes[3].edges;
-  nodes[3].weights;
-
-  nodes[4].num_edges;
-  nodes[4].edges;
-  nodes[4].weights;
-
-  nodes[5].num_edges;
-  nodes[5].edges;
-  nodes[5].weights;
-
-  nodes[6].num_edges;
-  nodes[6].edges;
-  nodes[6].weights;
-
-  nodes[7].num_edges;
-  nodes[7].edges;
-  nodes[7].weights;
-
-  nodes[8].num_edges;
-  nodes[8].edges;
-  nodes[8].weights;
-
-  nodes[9].num_edges;
-  nodes[9].edges;
-  nodes[9].weights;
-
-  nodes[10].num_edges;
-  nodes[10].edges;
-  nodes[10].weights;
-
-  return 0;
   //strating the algorith:  
   int start;
   cout << "enter starting node: ";
@@ -85,6 +65,8 @@ int main(){
   cout << "enter ending node: ";
   cin >> end;
 
-   
-
-}
+  MinHeap p = MinHeap(nodes, 11);
+  p.decreaseKey(start, 0);
+  cout << "here" << endl;
+  algorithm(p.pop(), p); 
+  }

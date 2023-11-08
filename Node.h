@@ -4,14 +4,13 @@
 class Node
 {
   public:
-    Node* edges;
     int* weights;
-    int num_edges;
-    Node parent;
+    Node* edges[3];
+    Node* parent;
     int name;
     int distance;
 
-    Node(int n, int size){
+    Node(int n){
       name = n;
       parent = nullptr;
       distance = INT_MAX;

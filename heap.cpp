@@ -1,12 +1,12 @@
 #include "heap.h"
 
 // Constructor: Builds a heap from a given array a[] of given size
-MinHeap::MinHeap(Node nodes[], int size)
+MinHeap::MinHeap(Node* nodes[11], int size)
 {
     heap_size = 0;
     capacity = size;
     for(int i = 0; i < size; i++){
-      insert(nodes[i]);
+      insert(*nodes[i]);
     }
 }
 
@@ -29,8 +29,11 @@ void MinHeap::insert(Node n){
 void MinHeap::decreaseKey(int name, int new_val)
 {
     int i = 0;
-    while(harr[i].name != name){i++;}
-    harr[i].distance = new_val;
+    for(int i = 0; i < heap_size; i++){
+      if(harr[i].name == name){
+        harr[i].distance = new_val;
+      }
+    }
     while (i != 0 && harr[parent(i)].distance > harr[i].distance)
     {
        swap(&harr[i], &harr[parent(i)]);
@@ -39,14 +42,14 @@ void MinHeap::decreaseKey(int name, int new_val)
 }
  
 // Method to remove minimum element (or root) from min heap
-Node MinHeap::pop()
+Node* MinHeap::pop()
 {
     if (heap_size <= 0)
         throw("heap empty");
     if (heap_size == 1)
     {
         heap_size--;
-        return harr[0];
+        return &harr[0];
     }
  
     // Store the minimum value, and remove it from heap
@@ -55,7 +58,7 @@ Node MinHeap::pop()
     heap_size--;
     MinHeapify(0);
  
-    return root;
+    return &root;
 }
  
  

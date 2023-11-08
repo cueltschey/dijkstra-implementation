@@ -22,41 +22,8 @@ void algorithm(Node* n, MinHeap &p){
 
 int main(){
   
-  /*
-  int names[11] = {1,2,3,4,5,6,7,8,9,10,11};
-  vector<int> edges[11][2] = {
-    {{4,6,9},{1,3,7}},
-    {{5,8},{2,2}},
-    {{6,5},{2,5}},
-    {{3},{5}},
-    {{8,9},{6,3}},
-    {{5},{6}},
-    {{},{}},
-    {{10,11},{3,8}},
-    {{5,7},{3,4}},
-    {{8},{3}},
-    {{}},{}}
-};
-*/
-  //initialize nodes
-  Node* nodes[11];
-  for(int name = 0; name < 11; ++name){
-    Node* n = new Node(name);
-    nodes[name] = n;
-  }
 
-
-  // connect nodes
-
-  for(int i = 0; i < 11; ++i){
-    for(int j = 0; j < 3; ++j){
-      nodes[i]->edges[j] = nodes[i + (rand() % 4)];
-      int we[3] = {rand() % 5, rand() % 5, rand() % 5};
-      nodes[i]->weights = we; 
-    }
-  }
-
-  //strating the algorith:  
+  //starting the algorith:  
   int start;
   cout << "enter starting node: ";
   cin >> start;
@@ -65,8 +32,17 @@ int main(){
   cout << "enter ending node: ";
   cin >> end;
 
-  MinHeap p = MinHeap(nodes, 11);
+  MinHeap p = MinHeap(11);
   p.decreaseKey(start, 0);
-  cout << "here" << endl;
+  
+  for(int hn = 0; hn < 11; hn++){
+    cout << "harr: " << p.harr[hn].name << " " << p.harr[hn].distance << endl;
+    cout << "edges:" << endl << endl;
+    for(int e = 0; e < 3; e++){
+      cout << p.harr[hn].edges[e]->name << " " << p.harr[hn].weights[e] << endl;
+    }
+    cout << endl;
+  }
+
   algorithm(p.pop(), p); 
   }

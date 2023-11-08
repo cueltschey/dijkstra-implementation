@@ -15,4 +15,9 @@ class Node
       parent = nullptr;
       distance = INT_MAX;
     }
+    Node(){
+      name = 0;
+      parent = nullptr;
+      distance = INT_MAX;
+    }
   };

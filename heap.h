@@ -7,13 +7,12 @@ using namespace std;
 // A class for Min Heap
 class MinHeap
 {
-private:
-    Node* harr; // pointer to array of elements in heap
+public:
+    Node *harr; // pointer to array of elements in heap
     int capacity; // maximum possible size of min heap
     int heap_size; // Current number of elements in min heap
-public:
     // Constructor
-    MinHeap(Node* nodes[11], int size);
+    MinHeap(int size);
 
     void insert(Node n);
  

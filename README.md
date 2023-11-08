@@ -11,6 +11,6 @@ run the following to clone on your machine
 > git clone https://github.com/cueltschey/dijkstra-implementation
 
 then run the main cpp function.
-the graph is made  using a .txt file (an example is included)
-run make to compile using the makefile
+the graph is generated randomly so that the graph is diffecernt each time. note that there are restrictions on what vertexes can
+be linked, based on their number. To change the size of the graph put a different number in the MinHeap constructor.
 

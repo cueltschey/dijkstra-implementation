@@ -1,5 +1,4 @@
 // A C++ program to demonstrate common Binary Heap Operations
-#include "Node.h"
 
 using namespace std; 
 
@@ -8,7 +7,7 @@ using namespace std;
 class MinHeap
 {
 public:
-    Node *harr; // pointer to array of elements in heap
+    int[2] *harr; // pointer to array of elements in heap
     int capacity; // maximum possible size of min heap
     int heap_size; // Current number of elements in min heap
     // Constructor

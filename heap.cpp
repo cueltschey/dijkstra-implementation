@@ -1,38 +1,15 @@
 #include "heap.h"
-#include <cstdlib>
 
 // Constructor: Builds a heap from a given array a[] of given size
 MinHeap::MinHeap(int size){
     heap_size = size;
     capacity = size;
-    harr = new Node[size];
-    for(int name = 0; name < size; ++name){
-      Node* n = new Node(name);
-      harr[name] = *n;
-    }
-    for(int i = 0; i < 11; ++i){
-      for(int j = 0; j < 3; ++j){
-        harr[i].edges[j] = &harr[i + (rand() % 4)];
-        harr[i].weights[0] = rand() % 5;
-        harr[i].weights[1] = rand() % 5;
-        harr[i].weights[2] = rand() % 5;
-      }
+    harr = new int[2][size]
+    for(int i = 0; i < size; ++i){
+      harr[i][0] = i;
+      harr[i][1] = INT_MAX;
     }
 }
-
-void MinHeap::insert(Node n){
-  if(heap_size == capacity){
-    return;
-  }
-  harr[heap_size] = n;
-  int i = heap_size;
-  while(i != 0 && harr[parent(i)].distance > harr[i].distance){
-    swap(&harr[i], &harr[parent(i)]);
-    i = parent(i);
-  }
-  heap_size++;
-}
- 
  
 // Decreases value of key at index 'i' to new_val.  It is assumed that
 // new_val is smaller than harr[i].
@@ -40,11 +17,11 @@ void MinHeap::decreaseKey(int name, int new_val)
 {
     int i = 0;
     for(int i = 0; i < heap_size; i++){
-      if(harr[i].name == name){
-        harr[i].distance = new_val;
+      if(harr[i][0] == name){
+        harr[i][1] = new_val;
       }
     }
-    while (i != 0 && harr[parent(i)].distance > harr[i].distance)
+    while (i != 0 && harr[parent(i)][1] > harr[i][1])
     {
        swap(&harr[i], &harr[parent(i)]);
        i = parent(i);
@@ -52,23 +29,23 @@ void MinHeap::decreaseKey(int name, int new_val)
 }
  
 // Method to remove minimum element (or root) from min heap
-Node* MinHeap::pop()
+int MinHeap::pop()
 {
     if (heap_size <= 0)
         throw("heap empty");
     if (heap_size == 1)
     {
         heap_size--;
-        return &harr[0];
+        return harr[0][0];
     }
  
     // Store the minimum value, and remove it from heap
-    Node root = harr[0];
+    int root = harr[0];
     harr[0] = harr[heap_size-1];
     heap_size--;
     MinHeapify(0);
  
-    return &root;
+    return root;
 }
  
  
@@ -87,9 +64,9 @@ void MinHeap::MinHeapify(int i)
     int l = left(i);
     int r = right(i);
     int smallest = i;
-    if (l < heap_size && harr[l].distance < harr[i].distance)
+    if (l < heap_size && harr[l][1] < harr[i][1])
         smallest = l;
-    if (r < heap_size && harr[r].distance < harr[smallest].distance)
+    if (r < heap_size && harr[r][1] < harr[smallest][1])
         smallest = r;
     if (smallest != i)
     {
@@ -99,9 +76,9 @@ void MinHeap::MinHeapify(int i)
 }
  
 // A utility function to swap two elements
-void MinHeap::swap(Node *x, Node *y)
+void MinHeap::swap(int[2] *x, int[2] *y)
 {
-    Node temp = *x;
+    int[2] temp = *x;
     *x = *y;
     *y = temp;
 }
